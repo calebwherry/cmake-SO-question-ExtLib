@@ -1,6 +1,19 @@
-all:
-	gcc ExtLib.cpp -o ExtLib.o -shared -fPIC
-	gcc ExtLib.o -o libExtLib.so -shared
+.PHONY : clean
+
+CXX = g++
+CXXFLAGS = -fPIC
+LDFLAGS = -shared
+
+SOURCES = $(shell echo *.cpp)
+HEADERS = $(shell echo *.hpp)
+OBJECTS = $(SOURCES:.cpp=.o)
+
+TARGET = libExtLib.so
+
+all: $(TARGET)
 
 clean:
-	rm ExtLib.o libExtLib.so
+	rm -f $(OBJECTS) $(TARGET)
+
+$(TARGET) : $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
