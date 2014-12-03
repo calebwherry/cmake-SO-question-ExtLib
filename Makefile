@@ -8,12 +8,16 @@ SOURCES = $(shell echo *.cpp)
 HEADERS = $(shell echo *.hpp)
 OBJECTS = $(SOURCES:.cpp=.o)
 
-TARGET = libExtLib.so
+SHARED_TARGET = libExtLib.so
+STATIC_TARGET = libExtLib.a
 
-all: $(TARGET)
+all: $(STATIC_TARGET) $(SHARED_TARGET)
 
 clean:
-	rm -f $(OBJECTS) $(TARGET)
+	rm -f $(OBJECTS) $(SHARED_TARGET) $(STATIC_TARGET)
 
-$(TARGET) : $(OBJECTS)
+$(STATIC_TARGET): $(OBJECTS)
+	ar rcs $(STATIC_TARGET) $(OBJECTS)
+
+$(SHARED_TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
