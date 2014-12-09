@@ -20,4 +20,4 @@ $(STATIC_TARGET): $(OBJECTS)
 	ar rcs $(STATIC_TARGET) $(OBJECTS)
 
 $(SHARED_TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(LDFLAGS) -Wl,-soname,$@
